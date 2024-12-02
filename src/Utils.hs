@@ -4,8 +4,10 @@ module Utils
   )
 where
 
+import Data.Text (pack, strip, unpack)
+
 getInput :: Int -> IO String
-getInput day = readFile filepath
+getInput day = unpack . strip . pack <$> readFile filepath
   where
     filepath = "inputs/day" ++ dayStr ++ ".txt"
     dayStr
