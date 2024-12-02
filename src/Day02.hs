@@ -16,31 +16,20 @@ part1 = count isSafe
 part2 :: [[Int]] -> Int
 part2 = count (any isSafe . dampen)
 
+data IncDec = Inc | Dec | Unknow deriving Eq
+
 isSafe :: [Int] -> Bool
-isSafe xs = case xs of
-  [] -> True
-  [_] -> True
-  (x : y : _) | x > y -> isSafeDecreasing xs
-  (x : y : _) | x < y -> isSafeIncreasing xs
-  _ -> False
-
-isSafeDecreasing :: [Int] -> Bool
-isSafeDecreasing [] = True
-isSafeDecreasing [_] = True
-isSafeDecreasing (x : y : xs)
-  | x > y && x - y < 4 = isSafeDecreasing (y : xs)
-  | otherwise = False
-
-isSafeIncreasing :: [Int] -> Bool
-isSafeIncreasing [] = True
-isSafeIncreasing [_] = True
-isSafeIncreasing (x : y : xs)
-  | x < y && y - x < 4 = isSafeIncreasing (y : xs)
-  | otherwise = False
+isSafe = go Unknow
+ where
+ go _ [] = True
+ go _ [_] = True
+ go incdec (x:y:xs) 
+    | x < y && y - x < 4 && incdec /= Dec = go Inc (y:xs)
+    | x > y && x - y < 4 && incdec /= Inc = go Dec (y:xs)
+    | otherwise  = False
 
 dampen :: [Int] -> [[Int]]
 dampen = helper []
   where
-    helper :: [Int] -> [Int] -> [[Int]]
     helper _ [] = []
     helper xs (y : ys) = (xs ++ ys) : helper (xs ++ [y]) ys
