@@ -1,6 +1,9 @@
 module Main (main) where
 
-import Lib
+import Day01 (part2)
+import Utils (runDay)
 
 main :: IO ()
-main = someFunc
+main = do
+  output <- runDay 1 part2
+  putStrLn output
