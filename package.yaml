@@ -1,6 +1,6 @@
-name:                advent-of-code-2k24
+name:                advent-of-code
 version:             0.1.0.0
-github:              "Suverkropp/advent-of-code-2k24"
+github:              "Suverkropp/advent-of-code"
 license:             BSD-3-Clause
 author:              "Sander Suverkropp"
 maintainer:          "sander.suverkropp@proton.me"
@@ -8,7 +8,6 @@ copyright:           "2024 Sander Suverkropp"
 
 extra-source-files:
 - README.md
-- CHANGELOG.md
 
 # Metadata used when publishing your package
 # synopsis:            Short description of your package
@@ -17,7 +16,7 @@ extra-source-files:
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/Suverkropp/advent-of-code-2k24#readme>
+description:         Please see the README on GitHub at <https://github.com/Suverkropp/advent-of-code#readme>
 
 dependencies:
 - base >= 4.7 && < 5
@@ -40,7 +39,7 @@ library:
   source-dirs: src
 
 executables:
-  advent-of-code-2k24-exe:
+  advent-of-code-exe:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
@@ -48,10 +47,10 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - advent-of-code-2k24
+    - advent-of-code
 
 tests:
-  advent-of-code-2k24-test:
+  advent-of-code-test:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
@@ -59,4 +58,4 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - advent-of-code-2k24
+    - advent-of-code
