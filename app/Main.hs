@@ -1,9 +1,9 @@
 module Main (main) where
 
-import Day03 (part2, handleInput)
+import Day04 (part2, handleInput, getDirections)
 import Utils (runDay)
 
 main :: IO ()
 main = do
-  output <- runDay 3 (part2 . handleInput)
+  output <- runDay 4 (part2 . handleInput)
   putStrLn output

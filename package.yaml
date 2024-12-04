@@ -23,6 +23,7 @@ dependencies:
 - text
 - ghc
 - regex-posix
+- array
 
 ghc-options:
 - -Wall
