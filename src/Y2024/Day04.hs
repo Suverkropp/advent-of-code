@@ -2,7 +2,7 @@ module Y2024.Day04 (day4) where
 
 import AoC
 import Data.Array (assocs, bounds, indices, (!))
-import Decode (Grid, readGrid)
+import Utils (Grid, readGrid)
 import Text.Regex.Posix ((=~))
 
 day4 :: AoC (Grid Char)

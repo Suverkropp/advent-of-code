@@ -2,18 +2,19 @@ module AoC
   ( getInput,
     runPart1,
     runPart2,
-    AoC(..)
+    AoC (..),
   )
 where
 
 import Data.Text (pack, strip, unpack)
 
-data AoC a = AoC { part1 :: a -> Int ,
+data AoC a = AoC
+  { part1 :: a -> Int,
     part2 :: a -> Int,
     handleInput :: String -> a,
     day :: Int,
-    year :: Int }
-
+    year :: Int
+  }
 
 getInput :: Int -> Int -> IO String
 getInput y d = unpack . strip . pack <$> readFile filepath

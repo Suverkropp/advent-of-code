@@ -5,7 +5,7 @@ import Data.Array (assocs, bounds, inRange, (!), (//))
 import Data.List (find)
 import Data.Maybe (fromJust)
 import Data.Set (Set, empty, insert, member, singleton, toList)
-import Decode (Grid, readGrid)
+import Utils (Grid, readGrid)
 import GHC.Utils.Misc (count)
 
 data Direction = North | East | South | West
