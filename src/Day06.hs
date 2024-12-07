@@ -5,11 +5,12 @@ module Day06
   )
 where
 
-import Data.Array (assocs, bounds, inRange, indices, (!), (//))
+import Data.Array (assocs, bounds, inRange, (!), (//))
 import Data.List (find)
 import Data.Maybe (fromJust)
-import Data.Set (Set, empty, insert, singleton, member)
+import Data.Set (Set, empty, insert, member, singleton, toList)
 import Decode (Grid, readGrid)
+import GHC.Utils.Misc (count)
 
 data Direction = North | East | South | West
   deriving (Eq, Ord)
@@ -50,7 +51,7 @@ inBounds :: Grid a -> Pos -> Bool
 inBounds grid = inRange $ bounds grid
 
 part2 :: (Pos, Grid Bool) -> Int
-part2 (pos, obs) = length [p | p <- indices obs, p /= pos, causesCycle p]
+part2 (pos, obs) = count (\p -> (p /= pos) && causesCycle p) $ toList $ walk obs (singleton pos) (pos, North)
   where
     causesCycle p = detectCycle (obs // [(p, True)]) empty (pos, North)
 
