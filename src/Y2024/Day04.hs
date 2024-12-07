@@ -1,4 +1,4 @@
-module Day04
+module Y2024.Day04
   ( part1,
     handleInput,
     getDirections,

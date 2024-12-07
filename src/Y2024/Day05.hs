@@ -1,4 +1,4 @@
-module Day05
+module Y2024.Day05
   ( part1,
     part2,
     handleInput,

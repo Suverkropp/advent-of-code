@@ -1,20 +1,28 @@
-module Day02
-  ( part1,
-    part2,
-    handleInput,
+module Y2024.Day02
+  ( day2
   )
 where
 
 import GHC.Utils.Misc (count)
+import AoC (AoC(..))
 
-handleInput :: String -> [[Int]]
-handleInput = map (map read . words) . lines
+day2 :: AoC [[Int]]
+day2 = AoC {
+    year = 2024,
+    day = 2,
+    part1 = countSafe,
+    part2 = countDampenedSafe,
+    handleInput = readLists
+}
 
-part1 :: [[Int]] -> Int
-part1 = count isSafe
+readLists :: String -> [[Int]]
+readLists = map (map read . words) . lines
 
-part2 :: [[Int]] -> Int
-part2 = count (any isSafe . dampen)
+countSafe :: [[Int]] -> Int
+countSafe = count isSafe
+
+countDampenedSafe :: [[Int]] -> Int
+countDampenedSafe = count (any isSafe . dampen)
 
 data IncDec = Inc | Dec | Unknow deriving Eq
 
