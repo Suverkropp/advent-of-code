@@ -1,20 +1,22 @@
-module Day04
-  ( part1,
-    handleInput,
-    getDirections,
-    part2,
-  )
-where
+module Y2024.Day04 (day4) where
 
+import AoC
 import Data.Array (assocs, bounds, indices, (!))
-import Text.Regex.Posix ((=~))
 import Decode (Grid, readGrid)
+import Text.Regex.Posix ((=~))
 
-handleInput :: String -> Grid Char
-handleInput = readGrid
+day4 :: AoC (Grid Char)
+day4 =
+  AoC
+    { year = 2024,
+      day = 4,
+      handleInput = readGrid,
+      part1 = countXMAS,
+      part2 = countCross
+    }
 
-part1 :: Grid Char -> Int
-part1 = searchLists . getDirections
+countXMAS :: Grid Char -> Int
+countXMAS = searchLists . getDirections
 
 getDirections :: Grid Char -> [[Char]]
 getDirections grid = [[grid ! i | i <- indices grid, cons i j] | cons <- directions, j <- [-m .. m]]
@@ -29,8 +31,8 @@ getDirections grid = [[grid ! i | i <- indices grid, cons i j] | cons <- directi
 searchLists :: [[Char]] -> Int
 searchLists = sum . map (\l -> (l =~ "XMAS") + (l =~ "SAMX"))
 
-part2 :: Grid Char -> Int
-part2 grid = length . filter (isX grid) . filter (not . onEdge grid) . map fst . filter ((== 'A') . snd) . assocs $ grid
+countCross :: Grid Char -> Int
+countCross grid = length . filter (isX grid) . filter (not . onEdge grid) . map fst . filter ((== 'A') . snd) . assocs $ grid
 
 onEdge :: Grid Char -> (Int, Int) -> Bool
 onEdge grid (x, y) = x == fst minIndex || x == fst maxIndex || y == snd minIndex || y == snd maxIndex
