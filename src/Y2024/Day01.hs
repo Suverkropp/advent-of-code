@@ -1,7 +1,4 @@
-module Y2024.Day01
-  ( day1,
-  )
-where
+module Y2024.Day01 (day1) where
 
 import AoC (AoC (..))
 import Data.List (sort)

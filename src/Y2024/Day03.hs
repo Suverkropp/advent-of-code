@@ -1,7 +1,4 @@
-module Y2024.Day03
-  ( day3
-  )
-where
+module Y2024.Day03 (day3) where
 
 import AoC (AoC (..))
 import Text.Regex.Posix (getAllTextMatches, (=~))
