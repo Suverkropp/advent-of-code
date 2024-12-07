@@ -6,4 +6,4 @@ import AoC (runPart1)
 main :: IO ()
 main = do
   output <- runPart1 day1
-  putStrLn output
+  print output
