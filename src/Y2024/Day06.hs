@@ -5,11 +5,8 @@ import Data.Array (assocs, bounds, inRange, (!), (//))
 import Data.List (find)
 import Data.Maybe (fromJust)
 import Data.Set (Set, empty, insert, member, singleton, toList)
-import Utils (Grid, readGrid)
 import GHC.Utils.Misc (count)
-
-data Direction = North | East | South | West
-  deriving (Eq, Ord)
+import Utils (Direction (..), Grid, readGrid, step)
 
 type Pos = (Int, Int)
 
@@ -35,12 +32,6 @@ turnRight North = East
 turnRight East = South
 turnRight South = West
 turnRight West = North
-
-step :: Direction -> Pos -> Pos
-step North (x, y) = (x, y - 1)
-step East (x, y) = (x + 1, y)
-step South (x, y) = (x, y + 1)
-step West (x, y) = (x - 1, y)
 
 countVisited :: Pos -> Grid Bool -> Int
 countVisited pos obs = length $ walk obs (singleton pos) (pos, North)

@@ -26,6 +26,7 @@ dependencies:
 - array
 - extra
 - containers
+- MissingH
 
 ghc-options:
 - -Wall
