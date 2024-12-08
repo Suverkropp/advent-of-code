@@ -1,9 +1,9 @@
 module Main (main) where
 
-import Y2015.Day05 (day5)
+import Y2024.Day08 (day8)
 import AoC (runPart1, runPart2)
 
 main :: IO ()
 main = do
-  output <- runPart2 day5
+  output <- runPart1 day8
   putStrLn output
