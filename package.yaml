@@ -27,6 +27,7 @@ dependencies:
 - extra
 - containers
 - MissingH
+- parsec
 
 ghc-options:
 - -Wall
