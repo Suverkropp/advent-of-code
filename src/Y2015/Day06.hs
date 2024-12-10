@@ -1,4 +1,3 @@
-{-# LANGUAGE TupleSections #-}
 {-# OPTIONS_GHC -Wno-unused-do-bind #-}
 
 module Y2015.Day06 (day6) where
@@ -6,7 +5,7 @@ module Y2015.Day06 (day6) where
 import AoC
 import Data.Array (accum, elems, listArray, (//))
 import Data.Ix (range)
-import Text.Parsec (Parsec (), char, digit, many1, parse, space, string, try, (<|>))
+import Text.Parsec (Parsec (), char, digit, many1, parse, space, string, (<|>), string')
 import Utils (Grid, Pos)
 
 day6 :: AoC [Instruction]
@@ -30,7 +29,7 @@ instructionParser = parseToggle <|> parseTurnOn <|> parseTurnOff
 
 parseOneInstruction :: String -> (Pos -> Pos -> Instruction) -> Parsec String () Instruction
 parseOneInstruction s f = do
-  try $ string s
+  string' s
   space
   p1 <- parsePos
   string " through "
