@@ -6,6 +6,7 @@ module Utils
     min3,
     step,
     Pos,
+    applyNTimes
   )
 where
 
@@ -39,3 +40,7 @@ readGrid s = array ((0, 0), (mx - 1, my - 1)) [((x, y), c) | (y, l) <- zip [0 ..
 
 min3 :: (Ord a) => a -> a -> a -> a
 min3 a b c = min (min a b) c
+
+applyNTimes :: Int -> (a -> a) -> a -> a
+applyNTimes 0 _ a = a
+applyNTimes n f a = applyNTimes (n - 1) f (f a)

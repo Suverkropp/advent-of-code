@@ -1,9 +1,12 @@
 module Main (main) where
 
-import Y2015.Day10 (day10)
+import Y2024.Day11 (day11, showBlinkTrie)
 import AoC
 
 main :: IO ()
 main = do
-  output <- runPart2 day10
+  putStrLn "start"
+  output <- runPart1 day11
+  putStrLn output
+  output <- runPart2 day11
   putStrLn output
