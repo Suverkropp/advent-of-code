@@ -12,7 +12,7 @@ day11 =
       day = 11,
       handleInput = map read . words,
       part1 = length . applyNTimes 25 blink,
-      part2 = sum . map (length . blinkStoneWithTrie 45)
+      part2 = sum . map (length . blinkStoneWithTrie 35)
     }
 
 blink :: [Int] -> [Int]
@@ -66,20 +66,3 @@ blinkStoneWithTrie :: Int -> Int -> [Int]
 blinkStoneWithTrie 0 s = [s]
 blinkStoneWithTrie 1 s = blinkStone s
 blinkStoneWithTrie i s = concatMap (\s' -> getFromTrie s' blinkTrie !! (i - 1)) $ blinkStone s
-
--- intTrie :: Trie Int
--- intTrie = trie' id
---   where
---     trie' f = Trie (f 1 - 1) (trie' (f . (* 2))) (trie' (f . (\n -> n * 2 + 1)))
-
-showBlinkTrie :: [((Int, Int), [Int])]
-showBlinkTrie = [((i, s), blinkStoneWithTrie i s) | i <- [0 .. 3], s <- [0, 1, 2]]
-
--- showIntTrie :: [(Int, Int)]
--- showIntTrie = [(i, getFromTrie i intTrie) | i <- [0 .. 100]]
-
--- showIntTrieLevels :: Int -> String
--- showIntTrieLevels n = showLevels n intTrie
---   where
---     showLevels 0 (Trie a _ _) = show a
---     showLevels n (Trie a l r) = "Trie " ++ show a ++ " (" ++ showLevels (n - 1) l ++ ") (" ++ showLevels (n - 1) r ++ ")"
