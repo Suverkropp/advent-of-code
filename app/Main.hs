@@ -6,8 +6,5 @@ import Utils
 
 main :: IO ()
 main = do
-  -- input <- readGrid <$> getInput 2024 12
-  -- print $ findRegions input
-
-  output <- runPart1 day12
+  output <- runPart2 day12
   putStrLn output
