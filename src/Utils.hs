@@ -14,13 +14,15 @@ module Utils
     posParser,
     showGrid,
     numChar,
+    getNums,
   )
 where
 
 import Data.Array (Array, array, bounds, (!))
+import Data.Char (isDigit)
 import Text.Parsec (digit, many1, oneOf, option, spaces, string)
 import Text.Parsec.String (Parser)
-import Data.Char (isDigit)
+import Data.List.Extra (wordsBy)
 
 data Direction = North | East | South | West
   deriving (Eq, Ord)
@@ -83,6 +85,9 @@ intParser = do
 
 numChar :: Char -> Bool
 numChar b = isDigit b || b == '-' || b == '+'
+
+getNums :: String -> [Int]
+getNums = map read . wordsBy (not . numChar)
 
 posParser :: Parser Pos
 posParser = do

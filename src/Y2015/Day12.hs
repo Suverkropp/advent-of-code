@@ -1,7 +1,6 @@
 module Y2015.Day12 (day12) where
 
 import AoC
-import Data.Char (isDigit)
 import Data.List.Extra (wordsBy)
 import Text.Parsec (between, many, parse, sepBy, (<|>))
 import Text.Parsec.Char (char, noneOf)
