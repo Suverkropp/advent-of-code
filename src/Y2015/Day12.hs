@@ -3,10 +3,11 @@ module Y2015.Day12 (day12) where
 import AoC
 import Data.Char (isDigit)
 import Data.List.Extra (wordsBy)
-import Text.Parsec (between, many, many1, parse, sepBy, (<|>))
-import Text.Parsec.Char (char, noneOf, satisfy)
+import Text.Parsec (between, many, parse, sepBy, (<|>))
+import Text.Parsec.Char (char, noneOf)
 import Text.Parsec.String (Parser)
 import Data.Tuple.Extra (second)
+import Utils (intParser, numChar)
 
 day12 :: AoC String
 day12 =
@@ -18,9 +19,6 @@ day12 =
       part2 = countNums . removeRed . parseElement
     }
 
-numChar :: Char -> Bool
-numChar b = isDigit b || b == '-'
-
 data Element = List [Element] | Object [(String, Element)] | Number Int | StringEl String
   deriving (Eq)
 
@@ -30,7 +28,7 @@ parseElement s = case parse elementParser "" s of
   Right el -> el
 
 elementParser :: Parser Element
-elementParser = listParser <|> objectParser <|> numberParser <|> (StringEl <$> bareStringParser)
+elementParser = listParser <|> objectParser <|> (Number <$> intParser) <|> (StringEl <$> bareStringParser)
 
 listParser :: Parser Element
 listParser = List <$> between (char '[') (char ']') (elementParser `sepBy` char ',')
@@ -41,12 +39,9 @@ objectParser = Object <$> between (char '{') (char '}') (attributeParser `sepBy`
 attributeParser :: Parser (String, Element)
 attributeParser = do
   s <- bareStringParser
-  char ':'
+  _ <- char ':'
   el <- elementParser
   return (s, el)
-
-numberParser :: Parser Element
-numberParser = Number . read <$> many1 (satisfy numChar)
 
 bareStringParser :: Parser String
 bareStringParser = between (char '"') (char '"') (many $ noneOf ['"'])

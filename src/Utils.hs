@@ -13,12 +13,14 @@ module Utils
     mul,
     posParser,
     showGrid,
+    numChar,
   )
 where
 
 import Data.Array (Array, array, bounds, (!))
 import Text.Parsec (digit, many1, oneOf, option, spaces, string)
 import Text.Parsec.String (Parser)
+import Data.Char (isDigit)
 
 data Direction = North | East | South | West
   deriving (Eq, Ord)
@@ -78,6 +80,9 @@ intParser = do
   sign <- option ' ' (oneOf "-+")
   num <- many1 digit
   return $ read (sign : num)
+
+numChar :: Char -> Bool
+numChar b = isDigit b || b == '-' || b == '+'
 
 posParser :: Parser Pos
 posParser = do
