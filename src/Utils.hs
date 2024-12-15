@@ -18,11 +18,12 @@ module Utils
   )
 where
 
-import Data.Array (Array, array, bounds, (!))
+import Data.Array (Array, bounds, (!), listArray)
 import Data.Char (isDigit)
 import Text.Parsec (digit, many1, oneOf, option, spaces, string)
 import Text.Parsec.String (Parser)
 import Data.List.Extra (wordsBy)
+import Data.List (transpose)
 
 data Direction = North | East | South | West
   deriving (Eq, Ord)
@@ -55,7 +56,7 @@ step West (x, y) = (x - 1, y)
 type Grid a = Array Pos a
 
 readGrid :: String -> Grid Char
-readGrid s = array ((0, 0), (mx - 1, my - 1)) [((x, y), c) | (y, l) <- zip [0 ..] (lines s), (x, c) <- zip [0 ..] l]
+readGrid s = listArray ((0,0),(mx-1,my-1)) $ concat . transpose $ lines s
   where
     my = length $ lines s
     mx = length s `div` my
