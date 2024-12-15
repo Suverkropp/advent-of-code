@@ -7,7 +7,7 @@ import Data.List (group, sort)
 import Data.List.Extra (groupSort)
 import Data.Maybe (fromJust, isJust, isNothing)
 import Data.Tuple.Extra (first)
-import Utils (Direction (..), Grid, Pos, readGrid, step)
+import Utils (Direction (..), Grid, Pos, readGrid, step, isVertical)
 
 day12 :: AoC (Grid Char)
 day12 =
@@ -64,8 +64,7 @@ fencePrice grid = sum $ zipWith (*) areas perims
 regionSides :: [Edge] -> Int
 regionSides = sum . map (countRuns . sort) . pairsToLines . map toAlongAcross
   where
-    isVert d = d == North || d == South
-    toAlongAcross (d, (x, y)) = if isVert d then ((d, y), x) else ((d, x), y)
+    toAlongAcross (d, (x, y)) = if isVertical d then ((d, y), x) else ((d, x), y)
     pairsToLines = map snd . groupSort
 
 countRuns :: [Int] -> Int

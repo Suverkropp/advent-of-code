@@ -15,6 +15,8 @@ module Utils
     showGrid,
     numChar,
     getNums,
+    isHorizontal,
+    isVertical,
   )
 where
 
@@ -52,6 +54,12 @@ step North (x, y) = (x, y - 1)
 step East (x, y) = (x + 1, y)
 step South (x, y) = (x, y + 1)
 step West (x, y) = (x - 1, y)
+
+isVertical :: Direction -> Bool
+isVertical d = d == North || d == South
+
+isHorizontal :: Direction -> Bool
+isHorizontal d = d == East || d == West
 
 type Grid a = Array Pos a
 
