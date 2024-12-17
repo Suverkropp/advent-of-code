@@ -29,6 +29,7 @@ dependencies:
 - MissingH
 - parsec
 - transformers
+- PSQueue
 
 ghc-options:
 - -Wall

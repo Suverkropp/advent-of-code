@@ -17,15 +17,19 @@ module Utils
     getNums,
     isHorizontal,
     isVertical,
+    findInGrid,
+    turnRight,
+    turnLeft,
   )
 where
 
-import Data.Array (Array, bounds, (!), listArray)
+import Data.Array (Array, bounds, (!), listArray, assocs)
 import Data.Char (isDigit)
 import Text.Parsec (digit, many1, oneOf, option, spaces, string)
 import Text.Parsec.String (Parser)
 import Data.List.Extra (wordsBy)
-import Data.List (transpose)
+import Data.List (transpose, find)
+import Data.Maybe (fromJust)
 
 data Direction = North | East | South | West
   deriving (Eq, Ord)
@@ -48,6 +52,18 @@ toDirection '>' = East
 toDirection 'v' = South
 toDirection '<' = West
 toDirection _ = undefined
+
+turnRight :: Direction -> Direction
+turnRight North = East
+turnRight East = South
+turnRight South = West
+turnRight West = North
+
+turnLeft :: Direction -> Direction
+turnLeft North = West
+turnLeft East = North
+turnLeft South = East
+turnLeft West = South
 
 step :: Direction -> Pos -> Pos
 step North (x, y) = (x, y - 1)
@@ -74,6 +90,9 @@ showGrid grid = foldr1 concatLines [[grid ! (x, y) | x <- [minX .. maxX]] | y <-
   where
     concatLines a b = a ++ "\n" ++ b
     ((minX, minY), (maxX, maxY)) = bounds grid
+
+findInGrid :: (Eq a) => a -> Grid a -> Pos
+findInGrid x = fst . fromJust . find ((== x) . snd) . assocs
 
 min3 :: (Ord a) => a -> a -> a -> a
 min3 a b c = min (min a b) c

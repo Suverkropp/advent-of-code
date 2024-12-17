@@ -1,12 +1,10 @@
 module Y2024.Day06 (day6) where
 
 import AoC
-import Data.Array (assocs, bounds, inRange, (!), (//))
-import Data.List (find)
-import Data.Maybe (fromJust)
+import Data.Array (bounds, inRange, (!), (//))
 import Data.Set (Set, empty, insert, member, singleton, toList)
 import GHC.Utils.Misc (count)
-import Utils (Direction (..), Grid, readGrid, step)
+import Utils (Direction (..), Grid, readGrid, step, findInGrid, turnRight)
 
 type Pos = (Int, Int)
 
@@ -25,13 +23,7 @@ readGridAndPos s = (pos, obstacles)
   where
     grid = readGrid s
     obstacles = fmap (== '#') grid
-    pos = fst . fromJust . find ((== '^') . snd) . assocs $ grid
-
-turnRight :: Direction -> Direction
-turnRight North = East
-turnRight East = South
-turnRight South = West
-turnRight West = North
+    pos = findInGrid '^' grid
 
 countVisited :: Pos -> Grid Bool -> Int
 countVisited pos obs = length $ walk obs (singleton pos) (pos, North)

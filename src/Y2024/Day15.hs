@@ -3,9 +3,8 @@ module Y2024.Day15 (day15, pushBigBox) where
 import AoC
 import Data.Array (assocs, (!), (//))
 import Data.Bifunctor (bimap, first, second)
-import Data.List (find)
 import Data.Maybe (fromJust, isJust)
-import Utils (Direction (..), Grid, Pos, isHorizontal, readGrid, step, toDirection)
+import Utils (Direction (..), Grid, Pos, isHorizontal, readGrid, step, toDirection, findInGrid)
 
 day15 :: AoC (String, [Direction])
 day15 =
@@ -26,7 +25,7 @@ splitOnNewline :: String -> (String, String)
 splitOnNewline = bimap (init . unlines) concat . break null . lines
 
 getRobot :: Grid Char -> (Grid Char, Pos)
-getRobot grid = let pos = fst $ fromJust $ find ((== '@') . snd) $ assocs grid in (grid // [(pos, '.')], pos)
+getRobot grid = let pos = findInGrid '@' grid in (grid // [(pos, '.')], pos)
 
 getGPS :: Pos -> Int
 getGPS (x, y) = x + 100 * y
