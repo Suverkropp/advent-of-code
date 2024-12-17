@@ -5,5 +5,5 @@ import Y2024.Day16
 
 main :: IO ()
 main = do
-  output <- runPart1 day16
+  output <- runPart2 day16
   putStrLn output
