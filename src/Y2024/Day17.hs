@@ -1,4 +1,5 @@
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# OPTIONS_GHC -Wno-incomplete-uni-patterns #-}
 
 module Y2024.Day17 (day17, runProgram) where
 
@@ -9,7 +10,7 @@ import Control.Monad.Trans.Writer (Writer, execWriter, tell)
 import Data.Bits (xor)
 import Data.List.Extra ((!?))
 import Utils (getNums)
-import Debug.Trace
+import Control.Exception (assert)
 
 day17 :: AoC ProgramState
 day17 =
@@ -18,7 +19,7 @@ day17 =
       day = 17,
       handleInput = readInput,
       part1 = sum . runProgram,
-      part2 = head . fastFindQuine . instructions
+      part2 = findQuine . instructions
     }
 
 data ProgramState = ProgramState
@@ -108,21 +109,35 @@ setRegisterB x = modify $ \ps -> ps {registerB = x}
 setRegisterC :: Int -> Interpreter ()
 setRegisterC x = modify $ \ps -> ps {registerC = x}
 
--- this is way too slow, since the anwser is > 8^15 = 2^45
-searchQuine :: ProgramState -> Int
-searchQuine ps = head [i | i <- [0 ..], checkQuine (ps {registerA = i})]
+checkQuine :: [Int] -> Int -> Bool
+checkQuine instrs a = instrs == runProgram ps
+  where
+    ps =
+      ProgramState
+        { registerA = a,
+          registerB = 0,
+          registerC = 0,
+          programCounter = 0,
+          instructions = instrs
+        }
 
-checkQuine :: ProgramState -> Bool
-checkQuine ps = instructions ps == runProgram ps
+dynamicRunLoop :: [Int] -> Int -> [Int]
+dynamicRunLoop instrs a = runProgram ps
+  where
+    ps =
+      ProgramState
+        { registerA = a,
+          registerB = 0,
+          registerC = 0,
+          programCounter = 0,
+          instructions = instrs
+        }
 
-runOneLoop :: Int -> Int
-runOneLoop a =
-  let b = (a `mod` 8) `xor` 1
-      c = (a `div` (2 ^ b)) `mod` 8
-   in 4 `xor` b `xor` c
+addBits :: [Int] -> Int -> Int -> [Int]
+addBits instrs i n = filter (\x -> dynamicRunLoop instrs x == [n]) [i * 8 .. i * 8 + 7]
 
-fastQuineLoop :: Int -> Int -> [Int]
-fastQuineLoop i n = filter (\x -> runOneLoop x == n) [i * 8 .. i * 8 + 7]
-
-fastFindQuine :: [Int] -> [Int]
-fastFindQuine = foldM fastQuineLoop 0 . reverse
+findQuine :: [Int] -> Int
+findQuine instrs = assertQuine $ head $ foldM (addBits codeInLoop) 0 $ reverse instrs
+  where
+    codeInLoop = init . init $ instrs
+    assertQuine a = assert (checkQuine instrs a) a
