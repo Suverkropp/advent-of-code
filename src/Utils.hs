@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 module Utils
   ( Grid,
     readGrid,
@@ -20,6 +21,8 @@ module Utils
     findInGrid,
     turnRight,
     turnLeft,
+    readPos,
+    showBoolGrid,
   )
 where
 
@@ -30,6 +33,7 @@ import Text.Parsec.String (Parser)
 import Data.List.Extra (wordsBy)
 import Data.List (transpose, find)
 import Data.Maybe (fromJust)
+import Data.Tuple.Extra (both, second)
 
 data Direction = North | East | South | West
   deriving (Eq, Ord)
@@ -91,11 +95,14 @@ showGrid grid = foldr1 concatLines [[grid ! (x, y) | x <- [minX .. maxX]] | y <-
     concatLines a b = a ++ "\n" ++ b
     ((minX, minY), (maxX, maxY)) = bounds grid
 
+showBoolGrid :: Grid Bool -> String
+showBoolGrid = showGrid . fmap (\x -> if x then '#' else '.')
+
 findInGrid :: (Eq a) => a -> Grid a -> Pos
 findInGrid x = fst . fromJust . find ((== x) . snd) . assocs
 
 min3 :: (Ord a) => a -> a -> a -> a
-min3 a b c = min (min a b) c
+min3 a b c = min a (min b c)
 
 applyNTimes :: Int -> (a -> a) -> a -> a
 applyNTimes 0 _ a = a
@@ -123,3 +130,6 @@ posParser = do
   _ <- string ","
   y <- intParser
   return (x, y)
+
+readPos :: String -> Pos
+readPos = both read . second tail . span numChar
