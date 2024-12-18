@@ -5,7 +5,7 @@ module Y2015.Day15 (day15) where
 import AoC
 import Utils (getNums)
 
-day15 :: AoC [Ingredient]
+day15 :: AoC [Ingredient] Int Int
 day15 =
   AoC
     { year = 2015,

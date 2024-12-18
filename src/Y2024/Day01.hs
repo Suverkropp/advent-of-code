@@ -3,7 +3,7 @@ module Y2024.Day01 (day1) where
 import AoC (AoC (..))
 import Data.List (sort)
 
-day1 :: AoC ([Int], [Int])
+day1 :: AoC ([Int], [Int]) Int Int
 day1 =
   AoC
     { day = 1,

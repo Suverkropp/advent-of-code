@@ -4,7 +4,7 @@ import AoC
 import Data.Map.Lazy (Map, fromList, (!))
 import Utils (applyNTimes)
 
-day11 :: AoC [Int]
+day11 :: AoC [Int] Int Int
 day11 =
   AoC
     { year = 2024,

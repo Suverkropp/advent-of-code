@@ -5,7 +5,7 @@ import Text.Parsec (lower, many, optional, parse, string)
 import Text.Parsec.String (Parser)
 import Utils (intParser)
 
-day16 :: AoC [Sue]
+day16 :: AoC [Sue] Int Int
 day16 =
   AoC
     { year = 2015,

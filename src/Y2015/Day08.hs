@@ -3,7 +3,7 @@ module Y2015.Day08 (day8, parseString) where
 import AoC
 import Data.Char (chr)
 
-day8 :: AoC String
+day8 :: AoC String Int Int
 day8 =
   AoC
     { year = 2015,

@@ -5,7 +5,7 @@ import Data.List.Extra (wordsBy)
 import Utils (numChar)
 import Data.List (transpose)
 
-day14 :: AoC [Reindeer]
+day14 :: AoC [Reindeer] Int Int
 day14 =
   AoC
     { year = 2015,

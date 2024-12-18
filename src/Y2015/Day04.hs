@@ -5,7 +5,7 @@ import Data.Hash.MD5 (md5s, Str (Str))
 import Data.Maybe (fromJust)
 import Data.List (find)
 
-day4 :: AoC String
+day4 :: AoC String Int Int
 day4 =
   AoC
     { year = 2015,

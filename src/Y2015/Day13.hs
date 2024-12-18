@@ -6,7 +6,7 @@ import AoC
 import Data.List (nub, permutations)
 import Data.Maybe (fromMaybe)
 
-day13 :: AoC [((String, String), Int)]
+day13 :: AoC [((String, String), Int)] Int Int
 day13 =
   AoC
     { year = 2015,

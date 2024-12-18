@@ -11,7 +11,7 @@ type Rule = (Int, Int)
 
 type Update = [Int]
 
-day5 :: AoC ([Rule], [Update])
+day5 :: AoC ([Rule], [Update]) Int Int
 day5 =
   AoC
     { year = 2024,

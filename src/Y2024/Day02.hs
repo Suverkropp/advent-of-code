@@ -3,7 +3,7 @@ module Y2024.Day02 (day2) where
 import AoC (AoC (..))
 import GHC.Utils.Misc (count)
 
-day2 :: AoC [[Int]]
+day2 :: AoC [[Int]] Int Int
 day2 =
   AoC
     { year = 2024,

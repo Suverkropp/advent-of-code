@@ -9,7 +9,7 @@ import Data.PSQueue (Binding ((:->)), PSQ, atMost, insertWith, minView, singleto
 import Data.Tuple.Extra ((&&&))
 import Utils (Direction (..), Grid, Pos, findInGrid, readGrid, step, turnLeft, turnRight)
 
-day16 :: AoC (Maze, Pos)
+day16 :: AoC (Maze, Pos) Int Int
 day16 =
   AoC
     { year = 2024,

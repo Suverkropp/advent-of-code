@@ -5,7 +5,7 @@ import Data.Char (digitToInt)
 import Data.List (mapAccumL)
 import Data.Tuple.Extra (first, fst3)
 
-day9 :: AoC [Int]
+day9 :: AoC [Int] Int Int
 day9 =
   AoC
     { year = 2024,

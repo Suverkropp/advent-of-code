@@ -4,8 +4,8 @@ module Y2024.Day18 (day18) where
 
 import AoC
 import Data.Array (inRange, listArray, (!), (//))
-import Data.Maybe (fromJust, isJust)
-import Utils (Grid, Pos, readPos)
+import Data.Maybe (fromJust, isNothing)
+import Utils (Grid, Pos, binarySearch, readPos)
 
 day18 :: AoC [Pos] Int Pos
 day18 =
@@ -18,17 +18,9 @@ day18 =
     }
 
 firstBlocking :: [Pos] -> Pos
-firstBlocking poss = poss !! binarySearch (\i -> hasPath $ take i poss) 0 (length poss)
+firstBlocking poss = poss !! (binarySearch (\i -> isBlocked $ take i poss) 0 (length poss) - 1)
   where
-    hasPath = isJust . findShortestPath . gridOf
-
-binarySearch :: (Int -> Bool) -> Int -> Int -> Int
-binarySearch func minN maxN
-  | maxN == minN + 1 = maxN
-  | func middle = binarySearch func middle maxN
-  | otherwise = binarySearch func minN middle
-  where
-    middle = (minN + maxN) `div` 2
+    isBlocked = isNothing . findShortestPath . gridOf
 
 start :: Pos
 start = (0, 0)

@@ -4,7 +4,7 @@ import AoC
 import Data.Array (array, assocs, bounds, elems, inRange, (!), (//))
 import Utils (Grid, Pos, applyNTimes, readGrid)
 
-day18 :: AoC (Grid Bool)
+day18 :: AoC (Grid Bool) Int Int
 day18 =
   AoC
     { year = 2015,

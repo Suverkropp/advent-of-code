@@ -7,7 +7,7 @@ import Data.Containers.ListUtils (nubOrd)
 import Data.List (permutations)
 import Data.Map.Strict (fromList, (!), (!?))
 
-day9 :: AoC [((String, String), Int)]
+day9 :: AoC [((String, String), Int)] Int Int
 day9 =
   AoC
     { year = 2015,

@@ -5,7 +5,7 @@ import Data.Char (digitToInt)
 import Data.List (group)
 import Utils (applyNTimes)
 
-day10 :: AoC [Int]
+day10 :: AoC [Int] Int Int
 day10 =
   AoC
     { year = 2015,

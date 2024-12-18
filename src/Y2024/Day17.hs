@@ -12,13 +12,13 @@ import Data.List.Extra ((!?))
 import Utils (getNums)
 import Control.Exception (assert)
 
-day17 :: AoC ProgramState
+day17 :: AoC ProgramState [Int] Int
 day17 =
   AoC
     { year = 2024,
       day = 17,
       handleInput = readInput,
-      part1 = sum . runProgram,
+      part1 = runProgram,
       part2 = findQuine . instructions
     }
 

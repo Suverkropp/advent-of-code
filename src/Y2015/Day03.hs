@@ -5,7 +5,7 @@ import Utils (Direction (..), step, toDirection, Pos)
 import Data.Containers.ListUtils (nubOrd)
 import Data.Tuple.Extra (both)
 
-day3 :: AoC [Direction]
+day3 :: AoC [Direction] Int Int
 day3 =
   AoC
     { year = 2015,

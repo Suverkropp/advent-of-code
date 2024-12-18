@@ -8,7 +8,7 @@ import Utils (Direction (..), Grid, readGrid, step, findInGrid, turnRight)
 
 type Pos = (Int, Int)
 
-day6 :: AoC (Pos, Grid Bool)
+day6 :: AoC (Pos, Grid Bool) Int Int
 day6 =
   AoC
     { year = 2024,

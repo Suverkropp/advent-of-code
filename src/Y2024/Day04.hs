@@ -5,7 +5,7 @@ import Data.Array (assocs, bounds, indices, (!))
 import Utils (Grid, readGrid)
 import Text.Regex.Posix ((=~))
 
-day4 :: AoC (Grid Char)
+day4 :: AoC (Grid Char) Int Int
 day4 =
   AoC
     { year = 2024,

@@ -8,7 +8,7 @@ import Text.Parsec.String (Parser)
 import Data.Tuple.Extra (second)
 import Utils (intParser, numChar)
 
-day12 :: AoC String
+day12 :: AoC String Int Int
 day12 =
   AoC
     { year = 2015,

@@ -8,7 +8,7 @@ import Text.Parsec (digit, lower, many1, parse, space, string, try, (<|>))
 import Text.Parsec.String (Parser)
 import Data.Map.Lazy (Map, (!), fromList)
 
-day7 :: AoC [Instruction]
+day7 :: AoC [Instruction] Int Int
 day7 =
   AoC
     { year = 2015,

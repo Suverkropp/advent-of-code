@@ -2,7 +2,7 @@ module Y2015.Day17 (day17) where
 
 import AoC
 
-day17 :: AoC [Int]
+day17 :: AoC [Int] Int Int
 day17 =
   AoC
     { year = 2015,

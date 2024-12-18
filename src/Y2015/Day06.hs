@@ -8,7 +8,7 @@ import Data.Ix (range)
 import Text.Parsec (Parsec (), char, digit, many1, parse, space, string, (<|>), string')
 import Utils (Grid, Pos)
 
-day6 :: AoC [Instruction]
+day6 :: AoC [Instruction] Int Int
 day6 =
   AoC
     { year = 2015,

@@ -4,7 +4,7 @@ import AoC
 import Data.Tuple.Extra ((***))
 import Prelude hiding ((||))
 
-day7 :: AoC [(Int, [Int])]
+day7 :: AoC [(Int, [Int])] Int Int
 day7 =
   AoC
     { year = 2024,

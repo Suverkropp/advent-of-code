@@ -14,7 +14,7 @@ import Text.Parsec (parse, string)
 import Text.Parsec.String (Parser)
 import Utils (Grid, Pos, add, mul, posParser)
 
-day14 :: AoC [Robot]
+day14 :: AoC [Robot] Int Int
 day14 =
   AoC
     { year = 2024,

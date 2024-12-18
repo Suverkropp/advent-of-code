@@ -23,6 +23,7 @@ module Utils
     turnLeft,
     readPos,
     showBoolGrid,
+    binarySearch,
   )
 where
 
@@ -133,3 +134,11 @@ posParser = do
 
 readPos :: String -> Pos
 readPos = both read . second tail . span numChar
+
+binarySearch :: (Int -> Bool) -> Int -> Int -> Int
+binarySearch func minN maxN
+  | maxN == minN + 1 = maxN
+  | func middle = binarySearch func minN middle
+  | otherwise = binarySearch func middle maxN
+  where
+    middle = (minN + maxN) `div` 2

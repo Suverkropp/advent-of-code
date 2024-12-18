@@ -11,7 +11,7 @@ import Data.Containers.ListUtils (nubOrd)
 import Data.List.Extra (groupSortOn)
 import Utils (Grid, Pos, readGrid)
 
-day8 :: AoC (Grid Char)
+day8 :: AoC (Grid Char) Int Int
 day8 =
   AoC
     { year = 2024,

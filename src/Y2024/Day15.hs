@@ -6,7 +6,7 @@ import Data.Bifunctor (bimap, first, second)
 import Data.Maybe (fromJust, isJust)
 import Utils (Direction (..), Grid, Pos, isHorizontal, readGrid, step, toDirection, findInGrid)
 
-day15 :: AoC (String, [Direction])
+day15 :: AoC (String, [Direction]) Int Int
 day15 =
   AoC
     { year = 2024,

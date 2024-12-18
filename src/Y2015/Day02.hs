@@ -4,7 +4,7 @@ import AoC
 import Data.List.Extra (wordsBy)
 import Utils (min3)
 
-day2 :: AoC [Dimensions]
+day2 :: AoC [Dimensions] Int Int
 day2 =
   AoC
     { year = 2015,

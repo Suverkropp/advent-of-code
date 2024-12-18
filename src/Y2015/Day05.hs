@@ -3,7 +3,7 @@ module Y2015.Day05 (day5) where
 import AoC
 import Data.List (isInfixOf)
 
-day5 :: AoC [String]
+day5 :: AoC [String] Int Int
 day5 =
   AoC
     { year = 2015,

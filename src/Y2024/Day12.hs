@@ -9,7 +9,7 @@ import Data.Maybe (fromJust, isJust, isNothing)
 import Data.Tuple.Extra (first)
 import Utils (Direction (..), Grid, Pos, readGrid, step, isVertical)
 
-day12 :: AoC (Grid Char)
+day12 :: AoC (Grid Char) Int Int
 day12 =
   AoC
     { year = 2024,

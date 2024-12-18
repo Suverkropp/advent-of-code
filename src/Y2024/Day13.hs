@@ -10,7 +10,7 @@ import Text.Parsec (endOfLine, many, optional, parse, string)
 import Text.Parsec.String (Parser)
 import Utils (Pos, add, intParserPos, mul)
 
-day13 :: AoC [Machine]
+day13 :: AoC [Machine] Int Int
 day13 =
   AoC
     { year = 2024,

@@ -7,7 +7,7 @@ import Data.Ix (inRange)
 import Utils (Grid, Pos, readGrid)
 import Data.Containers.ListUtils (nubOrd)
 
-day10 :: AoC (Grid Int)
+day10 :: AoC (Grid Int) Int Int
 day10 =
   AoC
     { year = 2024,

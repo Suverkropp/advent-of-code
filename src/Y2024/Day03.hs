@@ -3,7 +3,7 @@ module Y2024.Day03 (day3) where
 import AoC (AoC (..))
 import Text.Regex.Posix (getAllTextMatches, (=~))
 
-day3 :: AoC String
+day3 :: AoC String Int Int
 day3 =
   AoC
     { year = 2024,
