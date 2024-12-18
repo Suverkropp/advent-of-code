@@ -11,13 +11,13 @@ module Y$year.Day$day (day$day) where
 
 import AoC
 
-day$day :: AoC String
+day$day :: AoC String Int Int
 day$day =
   AoC
     { year = $year,
       day = $day,
       handleInput = id,
-      part1 = undefined,
-      part2 = undefined
+      part1 = _,
+      part2 = _
     }
 EOL
