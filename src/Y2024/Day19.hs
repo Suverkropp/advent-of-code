@@ -29,5 +29,8 @@ countArrangements :: [Towel] -> [String] -> [Int]
 countArrangements towels = map (arrangementsForDesign towels)
 
 arrangementsForDesign :: [Towel] -> String -> Int
-arrangementsForDesign _ [] = 1
-arrangementsForDesign towels pattern = sum [arrangementsForDesign towels (drop (length towel) pattern) | towel <- towels, towel `isPrefixOf` pattern]
+arrangementsForDesign towels pattern = head counts
+  where
+    counts = map arrangements [0 .. length pattern]
+    arrangements n | n == length pattern = 1
+    arrangements n = sum [counts !! (n + length towel) | towel <- towels, towel `isPrefixOf` drop n pattern]
