@@ -1,4 +1,3 @@
-{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 module Utils
   ( Grid,
     readGrid,
@@ -24,17 +23,19 @@ module Utils
     readPos,
     showBoolGrid,
     binarySearch,
+    allSteps,
+    mapToSnd,
   )
 where
 
-import Data.Array (Array, bounds, (!), listArray, assocs)
+import Data.Array (Array, assocs, bounds, listArray, (!))
 import Data.Char (isDigit)
-import Text.Parsec (digit, many1, oneOf, option, spaces, string)
-import Text.Parsec.String (Parser)
+import Data.List (find, transpose)
 import Data.List.Extra (wordsBy)
-import Data.List (transpose, find)
 import Data.Maybe (fromJust)
 import Data.Tuple.Extra (both, second)
+import Text.Parsec (digit, many1, oneOf, option, spaces, string)
+import Text.Parsec.String (Parser)
 
 data Direction = North | East | South | West
   deriving (Eq, Ord)
@@ -76,6 +77,9 @@ step East (x, y) = (x + 1, y)
 step South (x, y) = (x, y + 1)
 step West (x, y) = (x - 1, y)
 
+allSteps :: Pos -> [Pos]
+allSteps (x, y) = [(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)]
+
 isVertical :: Direction -> Bool
 isVertical d = d == North || d == South
 
@@ -85,10 +89,10 @@ isHorizontal d = d == East || d == West
 type Grid a = Array Pos a
 
 readGrid :: String -> Grid Char
-readGrid s = listArray ((0,0),(mx-1,my-1)) $ concat . transpose $ lines s
+readGrid s = listArray ((0, 0), (mx - 1, my - 1)) $ concat . transpose $ lines s
   where
     my = length $ lines s
-    mx = length s `div` my
+    mx = length $ head $ lines s
 
 showGrid :: Grid Char -> String
 showGrid grid = foldr1 concatLines [[grid ! (x, y) | x <- [minX .. maxX]] | y <- [minY .. maxY]]
@@ -142,3 +146,6 @@ binarySearch func minN maxN
   | otherwise = binarySearch func middle maxN
   where
     middle = (minN + maxN) `div` 2
+
+mapToSnd :: (a -> b) -> a -> (a, b)
+mapToSnd f a = (a, f a)

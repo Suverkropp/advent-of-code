@@ -12,18 +12,11 @@ day19 =
     { year = 2024,
       day = 19,
       handleInput = bimap (splitOn ", ") tail . fromJust . uncons . lines,
-      part1 = length . filter id . uncurry mapSolvable,
+      part1 = length . filter (>0) . uncurry countArrangements,
       part2 = sum . uncurry countArrangements
     }
 
 type Towel = String
-
-mapSolvable :: [Towel] -> [String] -> [Bool]
-mapSolvable towels = map isSolvable
-  where
-    isSolvable :: String -> Bool
-    isSolvable [] = True
-    isSolvable pattern = any isSolvable [drop (length towel) pattern | towel <- towels, towel `isPrefixOf` pattern]
 
 countArrangements :: [Towel] -> [String] -> [Int]
 countArrangements towels = map (arrangementsForDesign towels)
