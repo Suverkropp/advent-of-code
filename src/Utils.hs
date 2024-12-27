@@ -25,6 +25,7 @@ module Utils
     binarySearch,
     allSteps,
     mapToSnd,
+    dist,
   )
 where
 
@@ -51,6 +52,9 @@ infixl 7 `mul`
 
 mul :: Int -> Pos -> Pos
 mul i (x, y) = (i * x, i * y)
+
+dist :: Pos -> Pos -> Int
+dist (x, y) (x', y') = abs (x - x') + abs (y - y')
 
 toDirection :: Char -> Direction
 toDirection '^' = North

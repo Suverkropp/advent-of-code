@@ -1,52 +1,49 @@
 {-# LANGUAGE TupleSections #-}
-{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
-{-# HLINT ignore "Move mapMaybe" #-}
 
 module Y2024.Day20 (day20) where
 
 import AoC
-import Data.Array (bounds, inRange, range, (!), (//))
-import Data.Array.IArray ((!?))
+import Data.Array (bounds, elems, inRange, listArray, range, (!), (//))
 import Data.Maybe (fromJust, isNothing, mapMaybe)
 import Data.Tuple.Extra ((&&&))
-import Utils (Grid, Pos, allSteps, findInGrid, readGrid)
+import Utils (Grid, Pos, allSteps, dist, findInGrid, readGrid)
 
-day20 :: AoC (Maze, Pos) Int Int
+day20 :: AoC (Grid Bool, (Pos, Pos)) Int Int
 day20 =
   AoC
     { year = 2024,
       day = 20,
-      handleInput = ((fmap (== '#') &&& findInGrid 'E') &&& findInGrid 'S') . readGrid,
-      part1 = length . uncurry (findCheats 100),
-      part2 = undefined
+      handleInput = (fmap (== '#') &&& (findInGrid 'E' &&& findInGrid 'S')) . readGrid,
+      part1 = length . uncurry (findCheats 2 100),
+      part2 = length . uncurry (findCheats 20 100)
     }
-
-type Maze = (Grid Bool, Pos)
 
 type Cheat = (Pos, Pos)
 
-findCheats :: Int -> Maze -> Pos -> [Int]
-findCheats threshold (walls, end) start = filter withinThreshold . mapMaybe cheatQuality . concatMap (cheats walls) . range . bounds $ walls
+findCheats :: Int -> Int -> Grid Bool -> (Pos, Pos) -> [Int]
+findCheats cheatSize threshold walls (end, start) = concatMap (filter withinThreshold . mapMaybe (cheatQuality fromStart fromEnd) . cheats cheatSize validEnds) starts
   where
     withinThreshold x = x <= base - threshold
+    justWithinThreshold (Just x) = withinThreshold x
+    justWithinThreshold Nothing = False
     base = fromJust $ fromEnd ! start
     fromEnd = distanceFrom walls end
     fromStart = distanceFrom walls start
-    cheatQuality :: Cheat -> Maybe Int
-    cheatQuality cheat = do
-      mDistFromEnd <- fromEnd !? snd cheat
-      distFromEnd <- mDistFromEnd
-      mDistFromStart <- fromStart !? fst cheat
-      distFromStart <- mDistFromStart
-      return $ distFromEnd + distFromStart + 2
+    starts = filter (justWithinThreshold . (fromStart !)) . range . bounds $ walls
+    validEnds = listArray (bounds walls) $ zipWith (\wall d -> not wall && justWithinThreshold d) (elems walls) (elems fromEnd)
 
-cheats :: Grid Bool -> Pos -> [Cheat]
-cheats walls start = map (start,) . filter notWallEnd . filter inGrid $ twoSteps
+cheatQuality :: Grid (Maybe Int) -> Grid (Maybe Int) -> Cheat -> Maybe Int
+cheatQuality fromStart fromEnd cheat = do
+  distFromEnd <- fromEnd ! snd cheat
+  distFromStart <- fromStart ! fst cheat
+  return $ distFromEnd + distFromStart + uncurry dist cheat
+
+cheats :: Int -> Grid Bool -> Pos -> [Cheat]
+cheats steps validEnds start = [(start, end) | end <- posWithinRange, inGrid end, validEnds ! end]
   where
     (x, y) = start
-    twoSteps = [(x + 2, y), (x - 2, y), (x, y + 2), (x, y - 2), (x + 1, y + 1), (x + 1, y - 1), (x - 1, y + 1), (x - 1, y - 1)]
-    inGrid = inRange $ bounds walls
-    notWallEnd = not . (walls !)
+    posWithinRange = [(x', y') | x' <- [x - steps .. x + steps], y' <- [y - steps .. y + steps], dist start (x', y') <= steps, dist start (x', y') >= 2]
+    inGrid = inRange $ bounds validEnds
 
 distanceFrom :: Grid Bool -> Pos -> Grid (Maybe Int)
 distanceFrom walls end = go [(0, end)] $ (Nothing <$ walls) // [(end, Just 0)]
