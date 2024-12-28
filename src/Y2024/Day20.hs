@@ -3,7 +3,9 @@
 module Y2024.Day20 (day20) where
 
 import AoC
-import Data.Array (bounds, elems, inRange, listArray, range, (!), (//))
+import Control.Monad (join)
+import Data.Array (bounds, inRange, range, (!), (//))
+import Data.Array.IArray ((!?))
 import Data.Maybe (fromJust, isNothing, mapMaybe)
 import Data.Tuple.Extra ((&&&))
 import Utils (Grid, Pos, allSteps, dist, findInGrid, readGrid)
@@ -21,29 +23,21 @@ day20 =
 type Cheat = (Pos, Pos)
 
 findCheats :: Int -> Int -> Grid Bool -> (Pos, Pos) -> [Int]
-findCheats cheatSize threshold walls (end, start) = concatMap (filter withinThreshold . mapMaybe (cheatQuality fromStart fromEnd) . cheats cheatSize validEnds) starts
+findCheats cheatSize minDiff walls (end, start) = concatMap (filter (<= threshold) . mapMaybe (cheatQuality fromStart fromEnd) . cheats cheatSize) starts
   where
-    withinThreshold x = x <= base - threshold
-    justWithinThreshold (Just x) = withinThreshold x
-    justWithinThreshold Nothing = False
-    base = fromJust $ fromEnd ! start
+    threshold = fromJust (fromEnd ! start) - minDiff
     fromEnd = distanceFrom walls end
     fromStart = distanceFrom walls start
-    starts = filter (justWithinThreshold . (fromStart !)) . range . bounds $ walls
-    validEnds = listArray (bounds walls) $ zipWith (\wall d -> not wall && justWithinThreshold d) (elems walls) (elems fromEnd)
+    starts = filter (any (<= threshold) . (fromStart !)) . range . bounds $ walls
 
 cheatQuality :: Grid (Maybe Int) -> Grid (Maybe Int) -> Cheat -> Maybe Int
 cheatQuality fromStart fromEnd cheat = do
-  distFromEnd <- fromEnd ! snd cheat
-  distFromStart <- fromStart ! fst cheat
+  distFromEnd <- join $ fromEnd !? snd cheat
+  distFromStart <- join $ fromStart !? fst cheat
   return $ distFromEnd + distFromStart + uncurry dist cheat
 
-cheats :: Int -> Grid Bool -> Pos -> [Cheat]
-cheats steps validEnds start = [(start, end) | end <- posWithinRange, inGrid end, validEnds ! end]
-  where
-    (x, y) = start
-    posWithinRange = [(x', y') | x' <- [x - steps .. x + steps], y' <- [y - steps .. y + steps], dist start (x', y') <= steps, dist start (x', y') >= 2]
-    inGrid = inRange $ bounds validEnds
+cheats :: Int -> Pos -> [Cheat]
+cheats steps (x, y) = [((x, y), (x', y')) | x' <- [x - steps .. x + steps], y' <- [y - steps .. y + steps], dist (x, y) (x', y') <= steps]
 
 distanceFrom :: Grid Bool -> Pos -> Grid (Maybe Int)
 distanceFrom walls end = go [(0, end)] $ (Nothing <$ walls) // [(end, Just 0)]
