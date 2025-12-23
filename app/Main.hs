@@ -1,9 +1,10 @@
 module Main (main) where
 
 import AoC
-import Y2024.Day20
+import Y2024.Day21
 
 main :: IO ()
 main = do
-  output <- runPart2 day20
+  -- print $ filter (\x -> length x <= 68) $ codeToMoves "029A"
+  output <- runPart1 day21
   putStrLn output
